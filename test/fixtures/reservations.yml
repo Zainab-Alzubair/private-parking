@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  slot: one
+  user: one
+  start_time: 2023-06-09 08:44:59
+  end_time: 2023-06-09 08:44:59
+  checked_in: false
+  checked_out: false
+  is_cancelled: false
+
+two:
+  slot: two
+  user: two
+  start_time: 2023-06-09 08:44:59
+  end_time: 2023-06-09 08:44:59
+  checked_in: false
+  checked_out: false
+  is_cancelled: false
