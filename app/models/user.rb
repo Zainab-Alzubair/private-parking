@@ -7,6 +7,16 @@ class User < ApplicationRecord
   Roles = [ :admin , :default ]
   before_create :set_default_role
 
+    # Validations
+    validates :email, presence: true, uniqueness: true
+    validates :encrypted_password, presence: true
+    validates :name, presence: true
+    validates :surname, presence: true
+    validates :role, presence: true
+  
+    # Associations
+    has_many :reservations
+    
   def set_default_role
     self.role ||= :user
   end
