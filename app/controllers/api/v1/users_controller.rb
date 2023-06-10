@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_admin!
-
+  before_action :authorize_admin!, except: [:create]
+  skip_before_action :verify_authenticity_token
   # GET /api/v1/users
   def index
     @users = User.all
@@ -29,6 +29,16 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     head :no_content
+  end
+
+  # POST /api/v1/users
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      render json: @user, status: :created
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
   end
 
   private
