@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         post '/users/sign_up', to: 'registrations#create' # Add this line for user registration
         get '/csrf-token', to: 'csrf_tokens#show'
         get '/auth/validate_token', to: 'auth#validate_token'
+        post '/users/logout', to: 'users#logout' 
       end
     end
   end

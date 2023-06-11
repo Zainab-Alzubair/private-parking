@@ -3,4 +3,9 @@ class WorkingHour < ApplicationRecord
     validates :day, presence: true
     validates :start_time, presence: true
     validates :end_time, presence: true
-end
+  
+    # Specify column types
+    attribute :start_time, :time
+    attribute :end_time, :time
+  end
+  

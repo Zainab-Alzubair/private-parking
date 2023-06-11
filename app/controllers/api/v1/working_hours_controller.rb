@@ -1,6 +1,5 @@
 class Api::V1::WorkingHoursController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_admin_role, only: [:create, :update]
+  protect_from_forgery with: :null_session, only: Proc.new { |c| c.request.format.json? }
 
   # GET /api/v1/working_hours
   def index
@@ -37,7 +36,10 @@ class Api::V1::WorkingHoursController < ApplicationController
   private
 
   def working_hour_params
-    params.require(:working_hour).permit(:day, :start_time, :end_time)
+    params.require(:working_hour).permit(:day, :start_time, :end_time).tap do |wh_params|
+      wh_params[:start_time] = Time.zone.parse(wh_params[:start_time])
+      wh_params[:end_time] = Time.zone.parse(wh_params[:end_time])
+    end
   end
 
   def check_admin_role

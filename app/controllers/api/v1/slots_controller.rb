@@ -1,7 +1,7 @@
 class Api::V1::SlotsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_admin_role, except: [:index, :show]
-
+  # before_action :authenticate_user!
+  # before_action :check_admin_role, except: [:index, :show]
+  protect_from_forgery with: :null_session, only: Proc.new { |c| c.request.format.json? }
   # GET /api/v1/slots
   def index
     @slots = Slot.all
@@ -44,9 +44,10 @@ class Api::V1::SlotsController < ApplicationController
   private
 
   def slot_params
-    params.require(:slot).permit(:time, :car_type, :price, :is_disabled, :is_available, :is_cancelled, :cancelation_policy)
+    params.require(:slot).permit(:time, :car_type, :price, :is_disabled, :is_available, :is_cancelled, :cancelation_policy, :availability_start_time, :availability_end_time)
   end
-
+  
+  
   def check_admin_role
     unless current_user.admin?
       render json: { error: 'Unauthorized' }, status: :unauthorized
