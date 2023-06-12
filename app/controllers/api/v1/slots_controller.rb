@@ -44,9 +44,8 @@ class Api::V1::SlotsController < ApplicationController
   private
 
   def slot_params
-    params.require(:slot).permit(:time, :car_type, :price, :is_disabled, :is_available, :is_cancelled, :cancelation_policy, :availability_start_time, :availability_end_time)
+    params.require(:slot).permit(:time, :car_type, :price, :is_disabled, :is_available, :cancelation_policy, :availability_start_time, :availability_end_time)
   end
-  
   
   def check_admin_role
     unless current_user.admin?

@@ -1,33 +1,33 @@
 class Api::V1::ReservationsController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
+  protect_from_forgery with: :null_session, only: Proc.new { |c| c.request.format.json? }
 
   # GET /api/v1/reservations
   def index
-    @reservations = current_user.reservations
+    @user = User.find_by_id(params[:user_id])
+    @reservations = @user.reservations.all
     render json: { reservations: @reservations }, status: :ok
   end
 
   # POST /api/v1/reservations
   def create
-    @slot = Slot.find(params[:slot_id])
-    # Check if the slot is available for reservation
-    unless @slot.is_available?
-      render json: { error: 'Slot is not available for reservation' }, status: :unprocessable_entity
-      return
-    end
+    @user = User.find_by_id(params[:reservation][:user_id])
+    @slot = Slot.find(params[:reservation][:slot_id])
 
-    # Check if the user already has a reservation for the same date and time
-    if current_user.reservations.exists?(date: params[:date], time: @slot.time)
-      render json: { error: 'You already have a reservation for this date and time' }, status: :unprocessable_entity
+    # Check if the user exists
+    unless @user
+      render json: { error: 'User not found' }, status: :unprocessable_entity
       return
     end
 
     # Create a new reservation for the user
-    @reservation = current_user.reservations.new(slot: @slot, date: params[:date], time: @slot.time)
+    @reservation = @user.reservations.new(
+      slot: @slot,
+      start_time: params[:reservation][:start_time],
+      end_time: params[:reservation][:end_time]
+    )
 
-    if @reservation.save
-      # Update slot availability status
-      @slot.update(is_available: false)
+    if @reservation.valid? && @reservation.save
 
       render json: { reservation: @reservation, message: 'Reservation created successfully' }, status: :created
     else
@@ -37,13 +37,8 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /api/v1/reservations/:id
   def destroy
-    @reservation = current_user.reservations.find(params[:id])
-    @slot = @reservation.slot
-
+    @reservation = Reservation.find(params[:id])
     if @reservation.destroy
-      # Update slot availability status
-      @slot.update(is_available: true)
-
       render json: { message: 'Reservation canceled successfully' }, status: :ok
     else
       render json: { error: 'Unable to cancel reservation' }, status: :unprocessable_entity

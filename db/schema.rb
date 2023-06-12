@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_09_125144) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_12_083105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,7 +32,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_125144) do
     t.string "time"
     t.string "car_type"
     t.string "price"
-    t.string "decimal"
     t.boolean "is_disabled"
     t.boolean "is_available"
     t.boolean "is_cancelled"

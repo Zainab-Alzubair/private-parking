@@ -19,19 +19,9 @@ Rails.application.routes.draw do
         get '/csrf-token', to: 'csrf_tokens#show'
         get '/auth/validate_token', to: 'auth#validate_token'
         post '/users/logout', to: 'users#logout' 
+        get '/api/v1/users/logged_in_user_id', to: 'api/v1/users#logged_in_user_id'
+
       end
     end
   end
-  
-  # Define routes for admin users
-  # namespace :admin, path: 'api/v1', constraints: { user_role: 'admin' } do  
-  #   resources :users
-  #   resources :working_hours, only: [:create, :update]
-  #   resources :slots, only: [:create, :update, :destroy]
-  # end
-  
-  # Define routes for non-admin users
-  # namespace :user, path: 'api/v1', constraints: { user_role: 'default' } do
-  #   resources :reservations, only: [:index, :create, :destroy]
-  # end
 end

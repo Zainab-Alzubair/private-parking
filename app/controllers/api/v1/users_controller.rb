@@ -44,15 +44,14 @@ class Api::V1::UsersController < ApplicationController
 
     # POST /api/v1/users/logout
     def logout
-      # Perform any necessary logic for logging out
-      # Clear session/local storage
-      # Handle token revocation
-  
-      # For example:
       session[:user_id] = nil
       render json: { message: 'Logout successful' }
     end
   
+    def logged_in_user_id
+      render json: { user_id: current_user.id }
+    end
+    
   private
 
   def user_params
