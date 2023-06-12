@@ -61,7 +61,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: private_parking_backend_test
+  database: private-parking
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -85,6 +85,6 @@ test:
 #
 production:
   <<: *default
-  database: private_parking_backend_production
+  database: private-parking
   username: private_parking_backend
   password: <%= ENV["PRIVATE_PARKING_BACKEND_DATABASE_PASSWORD"] %>

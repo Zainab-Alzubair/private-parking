@@ -1,0 +1,172 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users/reservations/create":
+    post:
+      summary: create reservations
+      tags:
+      - api/reservations
+      responses:
+        '200':
+          description: successful
+  "/users/reservations/":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: list reservations
+      tags:
+      - api/slots
+      responses:
+        '200':
+          description: successful
+  "/users/reservations/{id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show reservations
+      tags:
+      - api/reservations
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete reservations
+      tags:
+      - api/reservations
+      responses:
+        '200':
+          description: successful
+  "/users/slots/create":
+    post:
+      summary: create slots
+      tags:
+      - api/slots
+      responses:
+        '200':
+          description: successful
+  "/users/slots/":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: list slots
+      tags:
+      - api/slots
+      responses:
+        '200':
+          description: successful
+  "/users/slots/{id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show slots
+      tags:
+      - api/slots
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete slots
+      tags:
+      - api/slots
+      responses:
+        '200':
+          description: successful
+  "/signup":
+    post:
+      summary: create user
+      tags:
+      - api/users
+      responses:
+        '200':
+          description: successful
+  "/users":
+    get:
+      summary: list users
+      tags:
+      - api/users
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create user
+      tags:
+      - api/users
+      responses:
+        '200':
+          description: successful
+  "/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show user
+      tags:
+      - api/users
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update user
+      tags:
+      - api/users
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update user
+      tags:
+      - api/users
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete user
+      tags:
+      - api/users
+      responses:
+        '200':
+          description: successful
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
