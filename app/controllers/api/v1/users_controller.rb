@@ -1,7 +1,8 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authorize_admin!, except: [:create]
+  # before_action :authenticate_user!
+  # before_action :authorize_admin!, except: [:create]
   skip_before_action :verify_authenticity_token
+  protect_from_forgery with: :null_session, only: Proc.new { |c| c.request.format.json? }
   # GET /api/v1/users
   def index
     @users = User.all
@@ -41,6 +42,16 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+    # POST /api/v1/users/logout
+    def logout
+      session[:user_id] = nil
+      render json: { message: 'Logout successful' }
+    end
+  
+    def logged_in_user_id
+      render json: { user_id: current_user.id }
+    end
+    
   private
 
   def user_params

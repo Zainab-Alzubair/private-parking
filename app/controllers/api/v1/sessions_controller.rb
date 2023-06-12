@@ -7,7 +7,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 
     if user && user.valid_password?(params[:user][:password])
       sign_in(user)
-      render json: { auth_token: user.authentication_token, role: user.role }
+      render json: { auth_token: user.authentication_token, role: user.role, user_id: user.id }
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
@@ -16,6 +16,6 @@ class Api::V1::SessionsController < Devise::SessionsController
   protected
 
   def configure_sign_in_params
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:name, :email, :password])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:name,:surname, :email, :password])
   end
 end
